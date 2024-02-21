@@ -78,8 +78,9 @@ android {
         applicationId "com.during"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "android-iap"
+        missingDimensionStrategy 'store', 'play'
     }
     signingConfigs {
         debug {
@@ -126,6 +127,10 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    def billing_version = "6.1.0"
+
+    implementation "com.android.billingclient:billing:$billing_version"
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
