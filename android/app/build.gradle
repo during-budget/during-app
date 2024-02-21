@@ -78,7 +78,7 @@ android {
         applicationId "com.during"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 5
+        versionCode 6
         versionName "android-iap"
         missingDimensionStrategy 'store', 'play'
     }
