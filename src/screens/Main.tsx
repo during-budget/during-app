@@ -14,7 +14,6 @@ import {
 import {
   ProductPurchase,
   PurchaseError,
-  Sku,
   SubscriptionPurchase,
   clearTransactionIOS,
   endConnection,
@@ -62,7 +61,7 @@ const Main = () => {
             error,
           );
         } else {
-          console.error('An error happend', 'finishTransaction', error);
+          console.error('An error happend', 'initConnection', error);
         }
       }
 
@@ -79,10 +78,14 @@ const Main = () => {
                 webview.current?.postMessage(
                   JSON.stringify({
                     intent: 'payment',
-                    content: purchase.productId,
+                    content: {
+                      id: purchase.productId,
+                      token: purchase.purchaseToken,
+                    },
                   }),
                 );
               } catch (error) {
+                console.error('An error happend', 'finishTransaction', error);
                 webview.current?.postMessage(
                   JSON.stringify({
                     intent: 'purchase_error',
@@ -160,7 +163,7 @@ const Main = () => {
               error,
             );
           } else {
-            console.error('An error happend', 'finishTransaction', error);
+            console.error('An error happend', 'requestPurchase', error);
           }
         }
 
