@@ -36,6 +36,8 @@ const Main = () => {
   const [purchaseUpdate, setPurchaseUpdate] = useState<any>(null);
   const [purchaseError, setPurchaseError] = useState<any>(null);
 
+  const [removeAds, setRemoveAds] = useState(false);
+
   const unitID =
     Platform.select({
       ios: 'ca-app-pub-7896727622535419/3140414754',
@@ -74,6 +76,10 @@ const Main = () => {
             if (receipt) {
               try {
                 await finishTransaction({purchase});
+
+                if (purchase.productId === 'remove_ad') {
+                  setRemoveAds(true);
+                }
 
                 webview.current?.postMessage(
                   JSON.stringify({
@@ -145,6 +151,9 @@ const Main = () => {
     const msg = e.nativeEvent.data;
     const obj = JSON.parse(msg);
     switch (obj.intent) {
+      case 'ad':
+        setRemoveAds(obj.content);
+        break;
       case 'payment':
         const id = obj.content;
         const products = await getProducts({skus: [id]});
@@ -199,13 +208,15 @@ const Main = () => {
           }}
           onMessage={handleOnMessage}
         />
-        <GAMBannerAd
-          unitId={adUnitId}
-          sizes={[BannerAdSize.FULL_BANNER]}
-          requestOptions={{
-            requestNonPersonalizedAdsOnly: true,
-          }}
-        />
+        {!removeAds && (
+          <GAMBannerAd
+            unitId={adUnitId}
+            sizes={[BannerAdSize.FULL_BANNER]}
+            requestOptions={{
+              requestNonPersonalizedAdsOnly: true,
+            }}
+          />
+        )}
       </SafeAreaView>
     </SafeAreaProvider>
   );
