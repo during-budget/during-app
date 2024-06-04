@@ -77,10 +77,6 @@ const Main = () => {
               try {
                 await finishTransaction({purchase});
 
-                if (purchase.productId === 'remove_ad') {
-                  setRemoveAds(true);
-                }
-
                 webview.current?.postMessage(
                   JSON.stringify({
                     intent: 'payment',
@@ -108,6 +104,10 @@ const Main = () => {
           webview.current?.postMessage(
             JSON.stringify({
               intent: 'purchase_error',
+              content: {
+                code: error.code,
+                message: error.message,
+              },
             }),
           );
           console.error(
@@ -175,13 +175,6 @@ const Main = () => {
             console.error('An error happend', 'requestPurchase', error);
           }
         }
-
-        // const paymentCompleted = true;
-        // if (paymentCompleted) {
-        //   webview.current?.postMessage(
-        //     JSON.stringify({intent: 'payment', content: id}),
-        //   );
-        // }
         break;
       case 'test':
         Alert.alert(obj.content);
