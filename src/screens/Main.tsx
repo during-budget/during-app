@@ -160,7 +160,11 @@ const Main = () => {
 
         try {
           if (products[0]) {
-            await requestPurchase({sku: products[0].productId});
+            if (Platform.OS === 'ios') {
+              await requestPurchase({sku: products[0].productId});
+            } else if (Platform.OS === 'android') {
+              await requestPurchase({skus: [products[0].productId]});
+            }
           } else {
             throw 'id not exists on product list';
           }
