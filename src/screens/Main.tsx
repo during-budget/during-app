@@ -81,8 +81,8 @@ const Main = () => {
                   JSON.stringify({
                     intent: 'payment',
                     content: {
-                      id: purchase.productId,
-                      token: purchase.purchaseToken,
+                      payload: purchase,
+                      platform: Platform.OS,
                     },
                   }),
                 );
