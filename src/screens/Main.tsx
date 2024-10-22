@@ -1,10 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Alert,
   BackHandler,
   Dimensions,
   Platform,
   StyleSheet,
+  View,
 } from 'react-native';
 import {
   BannerAdSize,
@@ -31,7 +33,7 @@ import {WebViewNativeEvent} from 'react-native-webview/lib/RNCWebViewNativeCompo
 
 const Main = () => {
   const webview = useRef<WebView>(null);
-  const [navState, setNaveState] = useState<WebViewNativeEvent>();
+  const [navState, setNavState] = useState<WebViewNativeEvent>();
 
   const [purchaseUpdate, setPurchaseUpdate] = useState<any>(null);
   const [purchaseError, setPurchaseError] = useState<any>(null);
@@ -192,9 +194,9 @@ const Main = () => {
       <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
         <WebView
           ref={webview}
-          source={{uri: 'https://www.during.money'}}
+          source={{uri: 'https://www.during.money/'}}
           style={styles.webview}
-          onNavigationStateChange={event => setNaveState(event)}
+          onNavigationStateChange={event => setNavState(event)}
           onLoadEnd={() => {
             webview.current?.postMessage(
               JSON.stringify({
@@ -204,6 +206,7 @@ const Main = () => {
             );
           }}
           onMessage={handleOnMessage}
+          ignoreSslError={true}
         />
         {!removeAds && (
           <GAMBannerAd

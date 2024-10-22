@@ -78,7 +78,7 @@ android {
         applicationId "com.during"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
+        versionCode 13
         versionName "android-iap"
         missingDimensionStrategy 'store', 'play'
     }
@@ -131,6 +131,9 @@ dependencies {
     def billing_version = "6.1.0"
 
     implementation "com.android.billingclient:billing:$billing_version"
+    
+    implementation('org.jetbrains:annotations:16.0.2')
+
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
